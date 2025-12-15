@@ -15,6 +15,12 @@ export default function Home() {
       descricao: "Calculadora O-RADS MRI para avaliação de lesões ovarianas",
       href: "/calculadoras/orads-mri",
     },
+    {
+      id: "orads-usg",
+      nome: "O-RADS USG",
+      descricao: "Calculadora O-RADS USG para avaliação de lesões ovarianas",
+      href: "/calculadoras/orads-usg",
+    },
   ];
 
   return (
