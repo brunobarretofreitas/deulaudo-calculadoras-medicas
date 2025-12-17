@@ -21,6 +21,12 @@ export default function Home() {
       descricao: "Calculadora O-RADS USG para avaliação de lesões ovarianas",
       href: "/calculadoras/orads-usg",
     },
+    {
+      id: "ti-rads",
+      nome: "TI-RADS",
+      descricao: "Calculadora TI-RADS para avaliação de nódulos tireoidianos",
+      href: "/calculadoras/ti-rads",
+    },
   ];
 
   return (
