@@ -27,6 +27,12 @@ export default function Home() {
       descricao: "Calculadora TI-RADS para avaliação de nódulos tireoidianos",
       href: "/calculadoras/ti-rads",
     },
+    {
+      id: "hepatic-steatosis-mri",
+      nome: "Esteatose Hepática por RM",
+      descricao: "Calculadora de Esteatose Hepática por Ressonância Magnética",
+      href: "/calculadoras/hepatic-steatosis-mri",
+    },
   ];
 
   return (
