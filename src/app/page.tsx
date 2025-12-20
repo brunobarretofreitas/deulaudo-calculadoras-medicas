@@ -30,9 +30,21 @@ export default function Home() {
     {
       id: "hepatic-steatosis-mri",
       nome: "Esteatose Hepática por RM",
-      descricao: "Calculadora de Esteatose Hepática por Ressonância Magnética",
+      descricao: "Calculadora para avaliação de esteatose hepática utilizando sequências em fase e fora de fase",
       href: "/calculadoras/hepatic-steatosis-mri",
     },
+    {
+      id: "ferro-hepatico",
+      nome: "Quantificação de Ferro Hepático",
+      descricao: "Calculadora para avaliação de concentração de ferro hepático (LIC) utilizando valores de R2* e T2*",
+      href: "/calculadoras/ferro-hepatico",
+    },
+    // {
+    //   id: "crescimento-fetal-doppler",
+    //   nome: "Crescimento Fetal + Doppler",
+    //   descricao: "Calculadora para avaliação de crescimento fetal e índices Doppler, baseada nas referências FMF/Barcelona",
+    //   href: "/calculadoras/crescimento-fetal-doppler",
+    // },
   ];
 
   return (
@@ -46,7 +58,7 @@ export default function Home() {
             Ferramentas de cálculo médico para auxiliar na prática clínica.
           </p>
 
-          <div className="grid gap-4 md:grid-cols-2">
+          <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
             {calculadoras.map((calculadora) => (
               <Link key={calculadora.id} href={calculadora.href}>
                 <Card className="h-full transition-all hover:shadow-lg hover:scale-[1.02] cursor-pointer">

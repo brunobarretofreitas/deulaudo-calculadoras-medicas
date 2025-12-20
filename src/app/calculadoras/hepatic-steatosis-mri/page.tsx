@@ -160,10 +160,6 @@ export default function HepaticSteatosisMRI() {
             <CardContent className="space-y-6">
               {/* Título Entradas */}
               <div className="relative">
-                <h2 className="text-2xl font-bold mb-4 bg-yellow-200 dark:bg-yellow-900/30 px-3 py-2 inline-block rounded">
-                  Entradas
-                </h2>
-                
                 {/* Notas informativas */}
                 <div className="flex gap-3 mb-6 flex-wrap">
                   <div className="bg-yellow-100 dark:bg-yellow-900/20 border border-yellow-300 dark:border-yellow-700 rounded px-3 py-2 text-sm">
