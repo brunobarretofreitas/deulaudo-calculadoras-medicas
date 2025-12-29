@@ -13,7 +13,13 @@ import { BackToCalculatorsButton } from "@/components/BackToCalculatorsButton";
 
 // Função para converter mg/g para µmol/g
 const convertToMicromol = (mgPerG: number): number => {
-  return mgPerG * 17.906;
+  const roundedUp = Math.ceil(mgPerG * 10) / 10;
+  return roundedUp * 17.91;
+};
+
+// Função para formatar número removendo .0 quando aplicável
+const formatNumber = (num: number): string => {
+  return num.toFixed(1).replace(/\.0$/, '');
 };
 
 // Função para classificar o LIC
@@ -60,10 +66,10 @@ export default function FerroHepatico() {
     }
 
     const t2Star = 1000 / r2;
-    const licGarbowskyMg = 0.032 * r2 - 0.14;
+    const licGarbowskyMg = 0.029 * Math.pow(r2, 1.014);
     const licGarbowskyMicromol = convertToMicromol(licGarbowskyMg);
-    const licReederMg = 0.027 * r2 - 0.14;
-    const licReederMicromol = convertToMicromol(licReederMg);
+    const licReederMg = parseFloat((r2 * 0.0284).toFixed(1));
+    const licReederMicromol = parseFloat((licReederMg * 17.91).toFixed(1));
 
     return {
       t2Star,
@@ -84,10 +90,10 @@ export default function FerroHepatico() {
     const r2Star15TConverted = r2 / 2 + 5.5;
     const t2Star = 1000 / r2;
     const t2Star15T = 1000 / r2Star15TConverted;
-    const licGarbowskyMg = 0.032 * r2Star15TConverted - 0.14;
+    const licGarbowskyMg = 0.029 * Math.pow(r2Star15TConverted, 1.014);
     const licGarbowskyMicromol = convertToMicromol(licGarbowskyMg);
-    const licReederMg = 0.0141 * r2;
-    const licReederMicromol = convertToMicromol(licReederMg);
+    const licReederMg = parseFloat((r2 * 0.015625).toFixed(1));
+    const licReederMicromol = parseFloat((licReederMg * 17.91).toFixed(1));
 
     return {
       r2Star15TConverted,
@@ -185,8 +191,8 @@ export default function FerroHepatico() {
                           <div>
                             <span className="font-semibold">LIC Garbowsky:</span>{" "}
                             <span>
-                              {calculations15T.licGarbowskyMg.toFixed(2)} mg/g e{" "}
-                              {calculations15T.licGarbowskyMicromol.toFixed(2)} µmol/g
+                              {formatNumber(calculations15T.licGarbowskyMg)} mg/g e{" "}
+                              {formatNumber(calculations15T.licGarbowskyMicromol)} µmol/g
                             </span>
                           </div>
                           {calculations15T.licGarbowskyMg >= 0 && (
@@ -199,8 +205,8 @@ export default function FerroHepatico() {
                           <div>
                             <span className="font-semibold">LIC Reeder:</span>{" "}
                             <span>
-                              {calculations15T.licReederMg.toFixed(2)} mg/g e{" "}
-                              {calculations15T.licReederMicromol.toFixed(2)} µmol/g
+                              {formatNumber(calculations15T.licReederMg)} mg/g e{" "}
+                              {formatNumber(calculations15T.licReederMicromol)} µmol/g
                             </span>
                           </div>
                           {calculations15T.licReederMg >= 0 && (
@@ -236,8 +242,8 @@ export default function FerroHepatico() {
                           <div>
                             <span className="font-semibold">LIC Garbowsky:</span>{" "}
                             <span>
-                              {calculations30T.licGarbowskyMg.toFixed(2)} mg/g e{" "}
-                              {calculations30T.licGarbowskyMicromol.toFixed(2)} µmol/g
+                              {formatNumber(calculations30T.licGarbowskyMg)} mg/g e{" "}
+                              {formatNumber(calculations30T.licGarbowskyMicromol)} µmol/g
                             </span>
                           </div>
                           {calculations30T.licGarbowskyMg >= 0 && (
@@ -250,8 +256,8 @@ export default function FerroHepatico() {
                           <div>
                             <span className="font-semibold">LIC Reeder:</span>{" "}
                             <span>
-                              {calculations30T.licReederMg.toFixed(2)} mg/g e{" "}
-                              {calculations30T.licReederMicromol.toFixed(2)} µmol/g
+                              {formatNumber(calculations30T.licReederMg)} mg/g e{" "}
+                              {formatNumber(calculations30T.licReederMicromol)} µmol/g
                             </span>
                           </div>
                           {calculations30T.licReederMg >= 0 && (
@@ -302,8 +308,8 @@ export default function FerroHepatico() {
                     <h3 className="text-lg font-semibold">1,5 Tesla</h3>
                     <div className="space-y-2 text-sm font-mono">
                       <div>T2* = 1000 / [R2*]</div>
-                      <div>LIC Garbowsky = 0,032 × R2* - 0,14</div>
-                      <div>LIC Reeder = 0,027 × R2* - 0,14</div>
+                      <div>LIC Garbowsky = 0,029 × (R2*^1,014)</div>
+                      <div>LIC Reeder = R2* × 0,0284</div>
                     </div>
                   </div>
 
@@ -314,8 +320,8 @@ export default function FerroHepatico() {
                       <div>T2* = 1000 / [R2*]</div>
                       <div>T2*(1,5T) = 1000 / R2*(1,5T)</div>
                       <div>R2*(1,5T) = (R2* / 2) + 5,5</div>
-                      <div>LIC Garbowsky ≈ 0,032 × R2*(1,5T) - 0,14 (mg/g)</div>
-                      <div>LIC Reeder = 0,0141 × R2* (mg/g)</div>
+                      <div>LIC Garbowsky = 0,029 × (R2*(1,5T)^1,014) (mg/g)</div>
+                      <div>LIC Reeder = R2* × 0,015625 (mg/g)</div>
                     </div>
                   </div>
 
@@ -325,7 +331,7 @@ export default function FerroHepatico() {
                       Conversão de unidades:
                     </h3>
                     <div className="text-sm font-mono mt-2">
-                      LIC (µmol/g) = LIC (mg/g) × 17,906
+                      LIC (µmol/g) = LIC (mg/g) × 17,91
                     </div>
                   </div>
                 </CardContent>
