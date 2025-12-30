@@ -12,9 +12,10 @@ import { Input } from "@/components/ui/input";
 import { BackToCalculatorsButton } from "@/components/BackToCalculatorsButton";
 
 // Função para converter mg/g para µmol/g
+// Primeiro arredonda o valor em mg/g para 1 decimal, depois converte
 const convertToMicromol = (mgPerG: number): number => {
-  const roundedUp = Math.ceil(mgPerG * 10) / 10;
-  return roundedUp * 17.91;
+  const mgPerGRounded = Math.round(mgPerG * 10) / 10;
+  return mgPerGRounded * 17.91;
 };
 
 // Função para formatar número removendo .0 quando aplicável
@@ -92,7 +93,7 @@ export default function FerroHepatico() {
     const t2Star15T = 1000 / r2Star15TConverted;
     const licGarbowskyMg = 0.029 * Math.pow(r2Star15TConverted, 1.014);
     const licGarbowskyMicromol = convertToMicromol(licGarbowskyMg);
-    const licReederMg = parseFloat((r2 * 0.015625).toFixed(1));
+    const licReederMg = parseFloat((r2 * 0.0141).toFixed(1));
     const licReederMicromol = parseFloat((licReederMg * 17.91).toFixed(1));
 
     return {
@@ -321,7 +322,7 @@ export default function FerroHepatico() {
                       <div>T2*(1,5T) = 1000 / R2*(1,5T)</div>
                       <div>R2*(1,5T) = (R2* / 2) + 5,5</div>
                       <div>LIC Garbowsky = 0,029 × (R2*(1,5T)^1,014) (mg/g)</div>
-                      <div>LIC Reeder = R2* × 0,015625 (mg/g)</div>
+                      <div>LIC Reeder = R2* × 0,0141 (mg/g)</div>
                     </div>
                   </div>
 
