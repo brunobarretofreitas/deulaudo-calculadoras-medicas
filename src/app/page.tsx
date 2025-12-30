@@ -47,6 +47,22 @@ export default function Home() {
     // },
   ];
 
+  // Agrupar calculadoras por letra inicial
+  const calculadorasAgrupadas = calculadoras.reduce((acc, calculadora) => {
+    const primeiraLetra = calculadora.nome.charAt(0).toUpperCase();
+    if (!acc[primeiraLetra]) {
+      acc[primeiraLetra] = [];
+    }
+    acc[primeiraLetra].push(calculadora);
+    return acc;
+  }, {} as Record<string, typeof calculadoras>);
+
+  // Ordenar as letras e as calculadoras dentro de cada grupo
+  const letrasOrdenadas = Object.keys(calculadorasAgrupadas).sort();
+  letrasOrdenadas.forEach((letra) => {
+    calculadorasAgrupadas[letra].sort((a, b) => a.nome.localeCompare(b.nome));
+  });
+
   return (
     <div className="flex min-h-screen items-center justify-center bg-background">
       <main className="flex min-h-screen w-full max-w-4xl flex-col items-center py-16 px-8">
@@ -58,16 +74,25 @@ export default function Home() {
             Ferramentas de cálculo médico para auxiliar na prática clínica.
           </p>
 
-          <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-            {calculadoras.map((calculadora) => (
-              <Link key={calculadora.id} href={calculadora.href}>
-                <Card className="h-full transition-all hover:shadow-lg hover:scale-[1.02] cursor-pointer">
-                  <CardHeader>
-                    <CardTitle>{calculadora.nome}</CardTitle>
-                    <CardDescription>{calculadora.descricao}</CardDescription>
-                  </CardHeader>
-                </Card>
-              </Link>
+          <div className="flex flex-col gap-6">
+            {letrasOrdenadas.map((letra) => (
+              <div key={letra} className="flex flex-col gap-3">
+                <h2 className="text-2xl font-semibold text-foreground border-b pb-2">
+                  {letra}
+                </h2>
+                <div className="flex flex-col gap-4">
+                  {calculadorasAgrupadas[letra].map((calculadora) => (
+                    <Link key={calculadora.id} href={calculadora.href}>
+                      <Card className="w-full transition-all hover:shadow-lg hover:scale-[1.01] cursor-pointer">
+                        <CardHeader>
+                          <CardTitle>{calculadora.nome}</CardTitle>
+                          <CardDescription>{calculadora.descricao}</CardDescription>
+                        </CardHeader>
+                      </Card>
+                    </Link>
+                  ))}
+                </div>
+              </div>
             ))}
           </div>
         </div>
