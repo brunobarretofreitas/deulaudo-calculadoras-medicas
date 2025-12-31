@@ -15,7 +15,7 @@ import { BackToCalculatorsButton } from "@/components/BackToCalculatorsButton";
 // Primeiro arredonda o valor em mg/g para 1 decimal, depois converte
 const convertToMicromol = (mgPerG: number): number => {
   const mgPerGRounded = Math.round(mgPerG * 10) / 10;
-  return mgPerGRounded * 17.91;
+  return mgPerGRounded * 17.9;
 };
 
 // Função para formatar número removendo .0 quando aplicável
@@ -61,6 +61,7 @@ export default function FerroHepatico() {
 
   // Cálculos para 1.5 Tesla
   const calculations15T = useMemo(() => {
+    debugger;
     const r2 = parseFloat(r2Star15T);
     if (isNaN(r2) || r2 <= 0) {
       return null;
@@ -69,8 +70,8 @@ export default function FerroHepatico() {
     const t2Star = 1000 / r2;
     const licGarbowskyMg = 0.029 * Math.pow(r2, 1.014);
     const licGarbowskyMicromol = convertToMicromol(licGarbowskyMg);
-    const licReederMg = parseFloat((r2 * 0.0284).toFixed(1));
-    const licReederMicromol = parseFloat((licReederMg * 17.91).toFixed(1));
+    const licReederMg = Math.ceil((- 0.04 + (2.62 * (Math.pow(10, -2) * r2))) * 10) / 10;
+    const licReederMicromol = parseFloat((licReederMg * 17.9).toFixed(1));
 
     return {
       t2Star,
@@ -93,8 +94,8 @@ export default function FerroHepatico() {
     const t2Star15T = 1000 / r2Star15TConverted;
     const licGarbowskyMg = 0.029 * Math.pow(r2Star15TConverted, 1.014);
     const licGarbowskyMicromol = convertToMicromol(licGarbowskyMg);
-    const licReederMg = parseFloat((r2 * 0.0141).toFixed(1));
-    const licReederMicromol = parseFloat((licReederMg * 17.91).toFixed(1));
+    const licReederMg = parseFloat((0.0141 * r2).toFixed(1));
+    const licReederMicromol = parseFloat((licReederMg * 17.9).toFixed(1));
 
     return {
       r2Star15TConverted,
@@ -310,7 +311,7 @@ export default function FerroHepatico() {
                     <div className="space-y-2 text-sm font-mono">
                       <div>T2* = 1000 / [R2*]</div>
                       <div>LIC Garbowsky = 0,029 × (R2*^1,014)</div>
-                      <div>LIC Reeder = R2* × 0,0284</div>
+                      <div>LIC Reeder = 0,0254 × R2* + 0,202</div>
                     </div>
                   </div>
 
@@ -322,7 +323,7 @@ export default function FerroHepatico() {
                       <div>T2*(1,5T) = 1000 / R2*(1,5T)</div>
                       <div>R2*(1,5T) = (R2* / 2) + 5,5</div>
                       <div>LIC Garbowsky = 0,029 × (R2*(1,5T)^1,014) (mg/g)</div>
-                      <div>LIC Reeder = R2* × 0,0141 (mg/g)</div>
+                      <div>LIC Reeder = 0,0141 × R2* (mg/g)</div>
                     </div>
                   </div>
 
@@ -332,7 +333,7 @@ export default function FerroHepatico() {
                       Conversão de unidades:
                     </h3>
                     <div className="text-sm font-mono mt-2">
-                      LIC (µmol/g) = LIC (mg/g) × 17,91
+                      LIC (µmol/g) = LIC (mg/g) × 17,9
                     </div>
                   </div>
                 </CardContent>
