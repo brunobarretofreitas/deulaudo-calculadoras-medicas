@@ -70,7 +70,8 @@ export default function FerroHepatico() {
     const t2Star = 1000 / r2;
     const licGarbowskyMg = 0.029 * Math.pow(r2, 1.014);
     const licGarbowskyMicromol = convertToMicromol(licGarbowskyMg);
-    const licReederMg = Math.ceil((- 0.04 + (2.62 * (Math.pow(10, -2) * r2))) * 10) / 10;
+    const licReederBase = 2.62 * (Math.pow(10, -2) * r2);
+    const licReederMg = Math.ceil((r2 < 100 ? -0.04 + licReederBase : licReederBase) * 10) / 10;
     const licReederMicromol = parseFloat((licReederMg * 17.9).toFixed(1));
 
     return {
