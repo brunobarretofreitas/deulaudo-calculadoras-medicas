@@ -312,7 +312,8 @@ export default function FerroHepatico() {
                     <div className="space-y-2 text-sm font-mono">
                       <div>T2* = 1000 / [R2*]</div>
                       <div>LIC Garbowsky = 0,029 × (R2*^1,014)</div>
-                      <div>LIC Reeder = 0,0254 × R2* + 0,202</div>
+                      <div>LIC Reeder = 0,0262 × R2* - 0,04 (se R2* &lt; 100)</div>
+                      <div>LIC Reeder = 0,0262 × R2* (se R2* ≥ 100)</div>
                     </div>
                   </div>
 
