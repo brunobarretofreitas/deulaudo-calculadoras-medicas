@@ -61,14 +61,16 @@ export default function FerroHepatico() {
 
   // Cálculos para 1.5 Tesla
   const calculations15T = useMemo(() => {
-    debugger;
     const r2 = parseFloat(r2Star15T);
     if (isNaN(r2) || r2 <= 0) {
       return null;
     }
 
     const t2Star = 1000 / r2;
-    const licGarbowskyMg = 0.029 * Math.pow(r2, 1.014);
+    const licGarbowskyCalculated = 0.029 * Math.pow(r2, 1.014);
+    const licGarbowskyMg = r2 >= 100 
+      ? Math.floor(licGarbowskyCalculated * 10) / 10
+      : licGarbowskyCalculated;
     const licGarbowskyMicromol = convertToMicromol(licGarbowskyMg);
     const licReederCalculated = (0.0262 * r2) + 0.04;
     const secondDecimal = Math.floor(licReederCalculated * 100) % 10;
@@ -96,7 +98,10 @@ export default function FerroHepatico() {
     const r2Star15TConverted = r2 / 2 + 5.5;
     const t2Star = 1000 / r2;
     const t2Star15T = 1000 / r2Star15TConverted;
-    const licGarbowskyMg = 0.029 * Math.pow(r2Star15TConverted, 1.014);
+    const licGarbowskyCalculated = 0.029 * Math.pow(r2Star15TConverted, 1.014);
+    const licGarbowskyMg = r2 >= 100 
+      ? Math.floor(licGarbowskyCalculated * 10) / 10
+      : licGarbowskyCalculated;
     const licGarbowskyMicromol = convertToMicromol(licGarbowskyMg);
     const licReederMg = parseFloat((0.0141 * r2).toFixed(1));
     const licReederMicromol = parseFloat((licReederMg * 17.9).toFixed(1));
